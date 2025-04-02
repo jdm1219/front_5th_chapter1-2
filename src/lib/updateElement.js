@@ -14,14 +14,11 @@ function updateAttributes(target, originNewProps, originOldProps) {
     for (const [key, value] of Object.entries(originNewProps)) {
       if (key === "className") {
         target.setAttribute("class", value);
-        break;
-      }
-      if (key.startsWith("on")) {
-        console.log("onUpdate");
+      } else if (key.startsWith("on")) {
         addEvent(target, key.replace("on", "").toLowerCase(), value);
-        break;
+      } else {
+        target.setAttribute(key, value);
       }
-      target.setAttribute(key, value);
     }
   }
 }

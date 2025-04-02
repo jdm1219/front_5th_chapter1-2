@@ -27,13 +27,10 @@ function updateAttributes($el, props) {
   for (const [key, value] of Object.entries(props)) {
     if (key === "className") {
       $el.setAttribute("class", value);
-      return;
-    }
-    if (key.startsWith("on")) {
-      console.log("onCreate");
+    } else if (key.startsWith("on")) {
       addEvent($el, key.replace("on", "").toLowerCase(), value);
-      return;
+    } else {
+      $el.setAttribute(key, value);
     }
-    $el.setAttribute(key, value);
   }
 }
