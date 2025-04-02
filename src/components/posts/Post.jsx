@@ -11,23 +11,10 @@ export const Post = ({
   likeUsers,
   activationLike = false,
 }) => {
-  const { currentUser, loggedIn, posts } = globalStore.getState();
+  const { togglePostLikeStatus } = globalStore.actions;
 
   const handleLikeClick = () => {
-    if (!loggedIn) {
-      alert("로그인 후 이용해주세요");
-      return;
-    }
-
-    const post = posts.find((post) => post.id === id);
-    if (!activationLike) {
-      post.likeUsers = [...post.likeUsers, currentUser.username];
-    } else {
-      post.likeUsers = post.likeUsers.filter(
-        (user) => user !== currentUser.username,
-      );
-    }
-    globalStore.setState({ posts: [...posts] });
+    togglePostLikeStatus(id);
   };
 
   return (
