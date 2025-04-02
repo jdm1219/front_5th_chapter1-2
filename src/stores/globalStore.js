@@ -55,12 +55,8 @@ export const globalStore = createStore(
     },
     togglePostLikeStatus(state, postId) {
       const username = state.currentUser?.username;
-      if (!username) {
-        alert("로그인 후 이용해주세요");
-        return state;
-      }
-
       const post = state.posts.find((post) => post.id === postId);
+
       if (!post.likeUsers.includes(username)) {
         post.likeUsers = [...post.likeUsers, username];
       } else {

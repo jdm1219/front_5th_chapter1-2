@@ -11,9 +11,14 @@ export const Post = ({
   likeUsers,
   activationLike = false,
 }) => {
+  const { currentUser } = globalStore.getState();
   const { togglePostLikeStatus } = globalStore.actions;
 
   const handleLikeClick = () => {
+    if (!currentUser) {
+      alert("로그인 후 이용해주세요");
+      return;
+    }
     togglePostLikeStatus(id);
   };
 
