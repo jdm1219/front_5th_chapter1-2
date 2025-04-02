@@ -1,3 +1,5 @@
+import { addEvent } from "./eventManager";
+
 export function createElement(vNode) {
   if (vNode === null || vNode === undefined || typeof vNode === "boolean") {
     return document.createTextNode("");
@@ -25,6 +27,11 @@ function updateAttributes($el, props) {
   for (const [key, value] of Object.entries(props)) {
     if (key === "className") {
       $el.setAttribute("class", value);
+      return;
+    }
+    if (key.startsWith("on")) {
+      console.log("onCreate");
+      addEvent($el, key.replace("on", "").toLowerCase(), value);
       return;
     }
     $el.setAttribute(key, value);
