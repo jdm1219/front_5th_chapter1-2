@@ -49,9 +49,14 @@ export const globalStore = createStore(
     error: null,
   },
   {
-    logout(state) {
+    login(state, username) {
+      const user = { username, email: "", bio: "" };
+      userStorage.set(user);
+      return { currentUser: user, loggedIn: true };
+    },
+    logout() {
       userStorage.reset();
-      return { ...state, currentUser: null, loggedIn: false };
+      return { currentUser: null, loggedIn: false };
     },
     togglePostLikeStatus(state, postId) {
       const username = state.currentUser?.username;
@@ -66,7 +71,7 @@ export const globalStore = createStore(
       return { posts: [...state.posts] };
     },
     addPost(state, post) {
-      return { ...state, posts: [post, ...state.posts] };
+      return { posts: [post, ...state.posts] };
     },
   },
 );

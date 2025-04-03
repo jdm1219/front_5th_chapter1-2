@@ -1,18 +1,10 @@
 /** @jsx createVNode */
 import { createVNode } from "../lib";
 import { globalStore } from "../stores";
-import { userStorage } from "../storages";
-
-function login(username) {
-  const user = { username, email: "", bio: "" };
-  globalStore.setState({
-    currentUser: user,
-    loggedIn: true,
-  });
-  userStorage.set(user);
-}
 
 export const LoginPage = () => {
+  const { login } = globalStore.actions;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const username = document.getElementById("username").value;
