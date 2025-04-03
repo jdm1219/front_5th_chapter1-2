@@ -6,24 +6,31 @@ import { ForbiddenError, UnauthorizedError } from "./errors";
 import { router } from "./router";
 import { render } from "./render";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 router.set(
-  createRouter({
-    "/": HomePage,
-    "/login": () => {
-      const { loggedIn } = globalStore.getState();
-      if (loggedIn) {
-        throw new ForbiddenError();
-      }
-      return <LoginPage />;
+  createRouter(
+    {
+      "/": HomePage,
+      "/login": () => {
+        const { loggedIn } = globalStore.getState();
+        if (loggedIn) {
+          throw new ForbiddenError();
+        }
+        return <LoginPage />;
+      },
+      "/profile": () => {
+        const { loggedIn } = globalStore.getState();
+        if (!loggedIn) {
+          throw new UnauthorizedError();
+        }
+        return <ProfilePage />;
+      },
     },
-    "/profile": () => {
-      const { loggedIn } = globalStore.getState();
-      if (!loggedIn) {
-        throw new UnauthorizedError();
-      }
-      return <ProfilePage />;
+    {
+      baseUrl: BASE_URL,
     },
-  }),
+  ),
 );
 
 function main() {

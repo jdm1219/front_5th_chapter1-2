@@ -1,15 +1,15 @@
 import { createObserver } from "./createObserver";
-const BASE_URL = import.meta.env.VITE_BASE_URL || "";
 
-export const createRouter = (routes) => {
+export const createRouter = (routes, options) => {
+  const baseUrl = options.baseUrl || "";
   const { subscribe, notify } = createObserver();
 
-  const getPath = () => window.location.pathname.replace(BASE_URL, "");
+  const getPath = () => window.location.pathname.replace(baseUrl, "");
 
   const getTarget = () => routes[getPath()];
 
   const push = (path) => {
-    window.history.pushState(null, null, `${BASE_URL}${path}`);
+    window.history.pushState(null, null, `${baseUrl}${path}`);
     notify();
   };
 
